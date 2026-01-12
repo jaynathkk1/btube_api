@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
+const cors = require("cors")
 
 const app = express();
 require("dotenv").config();
@@ -18,6 +19,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // other middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

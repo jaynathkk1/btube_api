@@ -118,6 +118,25 @@ Router.put("/:videoId", checkAuth, async (req, res) => {
   }
 });
 
+//get own video
+Router.get("/own-video",checkAuth,async(req,res)=>{
+  try {
+    const verifiedUser = await jwt.verify(req.headers.authorization.split(" ")[1],process.env.JWT_SECRET);
+    const videos = await Video.find({user_id:verifiedUser._id});
+    console.log(verifiedUser);
+    console.log(videos);
+    res.status(200).json({
+      videos:videos
+    })
+
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+})
+
 //Delete Video
 Router.delete("/:videoId", checkAuth, async (req, res) => {
   try {

@@ -122,7 +122,7 @@ Router.put("/:videoId", checkAuth, async (req, res) => {
 Router.get("/own-video",checkAuth,async(req,res)=>{
   try {
     const verifiedUser = await jwt.verify(req.headers.authorization.split(" ")[1],process.env.JWT_SECRET);
-    const videos = await Video.find({user_id:verifiedUser._id});
+    const videos = await Video.find({user_id:verifiedUser._id}).populate("user_id", "channelName logoUrl");
     console.log(verifiedUser);
     console.log(videos);
     res.status(200).json({

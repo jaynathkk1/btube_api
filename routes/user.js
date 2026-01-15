@@ -45,7 +45,7 @@ Router.post("/singup", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: error,
+      error: error.message,
     });
   }
 });

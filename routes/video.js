@@ -123,8 +123,22 @@ Router.get("/own-video",checkAuth,async(req,res)=>{
   try {
     const verifiedUser = await jwt.verify(req.headers.authorization.split(" ")[1],process.env.JWT_SECRET);
     const videos = await Video.find({user_id:verifiedUser._id}).populate("user_id", "channelName logoUrl");
-    console.log(verifiedUser);
-    console.log(videos);
+    res.status(200).json({
+      videos:videos
+    })
+
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+})
+
+Router.get("/:videoId",checkAuth,async(req,res)=>{
+  try {
+    const verifiedUser = await jwt.verify(req.headers.authorization.split(" ")[1],process.env.JWT_SECRET);
+    const videos = await Video.findById(req.params.videoId);
     res.status(200).json({
       videos:videos
     })

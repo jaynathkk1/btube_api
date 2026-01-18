@@ -217,14 +217,14 @@ Router.get("/own-video",checkAuth,async(req,res)=>{
 // })
 
 Router.get("/videos", async (req, res) => {
-    const search = req.query.search || "";
+    const title = req.query.title || "";
     const sort = req.query.sort || "old";  
     const category = req.query.category || "All";  
     const page = parseInt(req.query.page) || 1;   
-    const ITEM_PER_PAGE = 4;
+    const ITEM_PER_PAGE = 2;
     
-    // Build query object
-    const query = { channelName: { $regex: search, $options: "i" } };
+    // // Build query object
+    const query = { title: { $regex: title, $options: "i" } };
     if (category !== "All") {
         query.category = category;
     }
@@ -234,11 +234,7 @@ Router.get("/videos", async (req, res) => {
         const count = await Video.countDocuments(query);
         console.log(`Total videos: ${count}`);
         
-        const videosdata = await Video.find(query)
-            .sort({ datecreated: sort === "new" ? -1 : 1 })  // new=desc, old=asc
-            .limit(ITEM_PER_PAGE)
-            .skip(skip);
-
+        const videosdata = await Video.find(query).sort({ datecreated: sort === "new" ? -1 : 1 }).limit(ITEM_PER_PAGE).skip(skip);
         const pageCount = Math.ceil(count / ITEM_PER_PAGE);
         
         res.status(200).json({

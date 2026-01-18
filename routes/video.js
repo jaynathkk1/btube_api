@@ -135,86 +135,6 @@ Router.get("/own-video",checkAuth,async(req,res)=>{
   }
 })
 
-// router.get('/user/details',controllers.userget);
-// //  Get All Users
-// exports.userget = async (req, res) => {
-//     const search = req.query.search || ""
-//     const gender = req.query.gender || ""
-//     const status = req.query.status || ""
-//     const sort = req.query.sort || ""
-//     const page = req.query.page || 1
-//     const ITEM_PER_PAGE = 4;
-
-//     const query = {
-//         fname: { $regex: search, $options: "i" }
-//     }
-//     if (gender !== "All") {
-//         query.gender = gender;
-//     }
-//     if (status !== "All") {
-//         query.status = status;
-//     }
-//     try {
-        
-//         const skip = (page-1) * ITEM_PER_PAGE //(2-1)*4=4
-//         const count =await users.countDocuments(query);
-
-
-//         console.log(count);
-
-//         const usersdata = await users.find(query)
-//             .sort({ datecreated: sort === "new" ? -1 : 1 })
-//             .limit(ITEM_PER_PAGE)
-//             .skip(skip);
-
-//         const pageCount = Math.ceil(count/ITEM_PER_PAGE); // 8/4=2
-//         res.status(200).json({
-//             Pagination:{
-//                 count,pageCount
-//             },
-//             usersdata
-//         })
-//     } catch (error) {
-//         console.log(error);
-//         res.status(401).json(error)
-//     }
-// }
-// Router.get(`?search=${search}&category=${category}&sort=${sort}&page=${page}`,async(req,res)=>{
-//     const search = req.query.search || ""
-//     const sort = req.query.sort || ""
-//     const category = req.query.sort || ""
-//     const page = req.query.page || 1
-//     const ITEM_PER_PAGE = 4;
-//     const query = {
-//         channelName: { $regex: search, $options: "i" }
-//       }
-//     if (category !== "All") {
-//         query.category = category;
-//     }
-//   try {
-    
-//         const skip = (page-1) * ITEM_PER_PAGE //(2-1)*4=4
-//         const count =await Video.countDocuments(query);
-//         console.log(count);
-//         const videosdata = await Video.find(query)
-//             .sort({ datecreated: sort === "new" ? -1 : 1 })
-//             .limit(ITEM_PER_PAGE)
-//             .skip(skip);
-
-//         const pageCount = Math.ceil(count/ITEM_PER_PAGE); // 8/4=2
-//         res.status(200).json({
-//             Pagination:{
-//                 count,pageCount
-//             },
-//             videosdata
-//         })
-//   } catch (error) {
-//     console.log(err);
-//     res.status(500).json({
-//       error: err.message,
-//     });
-//   }
-// })
 
 Router.get("/videos", async (req, res) => {
     const title = req.query.title || "";
@@ -223,7 +143,6 @@ Router.get("/videos", async (req, res) => {
     const page = parseInt(req.query.page) || 1;   
     const ITEM_PER_PAGE = 2;
     
-    // // Build query object
     const query = { title: { $regex: title, $options: "i" } };
     if (category !== "All") {
         query.category = category;

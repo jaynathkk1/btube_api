@@ -152,10 +152,8 @@ Router.get("/videos", async (req, res) => {
         const skip = (page - 1) * ITEM_PER_PAGE;
         const count = await Video.countDocuments(query);
         console.log(`Total videos: ${count}`);
-        
-        const videosdata = await Video.find(query).sort({ datecreated: sort === "new" ? -1 : 1 }).populate("").limit(ITEM_PER_PAGE).skip(skip);
+        const videosdata = await Video.find(query).sort({ datecreated: sort === "new" ? -1 : 1 }).populate("user_id","channelName logoUrl").limit(ITEM_PER_PAGE).skip(skip);
         const pageCount = Math.ceil(count / ITEM_PER_PAGE);
-        
         res.status(200).json({
             Pagination: {
                 currentPage: page,

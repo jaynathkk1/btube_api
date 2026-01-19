@@ -141,7 +141,7 @@ Router.get("/videos", async (req, res) => {
     const sort = req.query.sort || "old";  
     const category = req.query.category || "All";  
     const page = parseInt(req.query.page) || 1;   
-    const ITEM_PER_PAGE = 2;
+    const ITEM_PER_PAGE = 20;
     
     const query = { title: { $regex: title, $options: "i" } };
     if (category !== "All") {
